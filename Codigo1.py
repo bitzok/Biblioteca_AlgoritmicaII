@@ -57,10 +57,10 @@ class Admin():
             print("Los datos han sido guardados.")
         else:
             print("Los campos son requeridos.")
-       
-if __name__ == "__main__":
-    window = Tk()
-    app = Admin(window)
-    app1 = Admin.editarStock(app)
-    window.mainloop()
+    
+              
+        #window = Tk()
+        #app = Admin(window)
+        #app1 = Admin.editarStock(app)
+        #window.mainloop()
 
