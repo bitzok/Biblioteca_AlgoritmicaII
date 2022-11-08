@@ -3,7 +3,7 @@ from tkinter.messagebox import *
 
 import sqlite3
 
-from Codigo1 import * 
+from codigo_principal import * 
 
 def root():
     global screen_login
@@ -39,11 +39,8 @@ def login():
 
     if c.fetchall():
         showinfo(title = "Successful Login", message = "Successfully logged in session")
-        window = Tk()
-        app = Admin(window)
-        app1 = Admin.editarStock(app)
-        window.mainloop()
-
+        screen_login.destroy()
+        home()
     else:
         showerror(title = "Something go wrong", message = "Wrong username or password")
         option = askretrycancel (title = "Try Again", message ="Want to try again ? ")

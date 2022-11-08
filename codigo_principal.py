@@ -138,7 +138,7 @@ class Admin(VentanaPrincipal):
         else:
             print("Se requiere un stock mayor a cero.")
 
-if __name__ == "__main__":
+def home():
     app = Admin()
     app1 = Admin.ventanaPrincipal(app)
-    
+  
