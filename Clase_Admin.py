@@ -1,15 +1,24 @@
 from tkinter import ttk
 from tkinter import *
-import sqlite3 as sql
+from Funciones_DB import *
+from abc import ABC, abstractmethod
 
+class I_Clases(ABC):
+    @abstractmethod
+    def ventanaPrincipal(self):
+        pass
+
+    @abstractmethod
+    def consultar(self, consulta, parametros):
+        pass
 
 class VentanaPrincipal():
     def __init__(self):
         self.raiz = Tk()
         
-class Admin(VentanaPrincipal):
+class Admin(VentanaPrincipal, I_Clases):
 
-    db_nombre = "BaseDatos2.db"
+    db_nombre = "StockLibros.db"
 
     def __init__(self):
         super().__init__()
@@ -19,14 +28,7 @@ class Admin(VentanaPrincipal):
         self.wind.config(bg = "brown")
         self.wind.columnconfigure(0, weight = 1)
         self.wind.rowconfigure(0, weight = 1)
-        
 
-    def cambiar(self, frame):
-        try:
-            frame.tkraise()
-        except:
-            pass
-        
     def agregarProducto(self):
         cuadro = LabelFrame(self.wind, text = 'Ingrese el libro deseado: ')
         cuadro.grid(row = 0, column = 0, columnspan = 3, pady = 20)
@@ -49,8 +51,7 @@ class Admin(VentanaPrincipal):
         self.stock.grid(row=4, column=1)
         #BotónAgregarProducto
         self.principal.destroy()
-        Button(cuadro, text = 'Agregar', height = 2, command = self.agregarProductos).grid(row = 5, columnspan = 2, sticky = W + E)
-        cuadro.tkraise()
+        Button(cuadro, text = 'Agregar', height = 2, command = lambda: Funciones_Admin_Db.agregarProductos(self)).grid(row = 5, columnspan = 2, sticky = W + E)
         
     def eliminarProducto(self):
         cuadro2 = LabelFrame(self.wind, text = 'Codigo del libro que desea eliminar del stock: ')
@@ -62,8 +63,7 @@ class Admin(VentanaPrincipal):
         self.codigo.grid (row = 1, column = 1)
         self.principal.destroy()
        #BotónBorrarProducto
-        Button(cuadro2, text = 'Borrar', height = 1, command = self.borrarProductos).grid(row = 5, columnspan = 4, sticky = W + E)
-        cuadro2.tkraise()
+        Button(cuadro2, text = 'Borrar', height = 1, command = lambda: Funciones_Admin_Db.borrarProductos(self)).grid(row = 5, columnspan = 4, sticky = W + E)
 
     def modificarStock(self):
         cuadro3 = LabelFrame(self.wind, text = "Ingrese el codigo y el nuevo stock: ")
@@ -78,67 +78,47 @@ class Admin(VentanaPrincipal):
         self.stock.grid(row=2, column=1)
         self.principal.destroy()
         #BotonBorrarStock
-        Button(cuadro3, text = "Modificar Stock", command = self.editarStock).grid(row=4, columnspan = 4, sticky = W + E)
+        Button(cuadro3, text = "Modificar Stock", command = lambda: Funciones_Admin_Db.editarStock(self)).grid(row=4, columnspan = 4, sticky = W + E)
+
+    def mostrarStock(self):
+        cuadro4 = LabelFrame(self.wind, text = "El stock disponible es el siguiente: ")
+        #TablaDeProductos
+        self.Tabla = ttk.Treeview(columns = (1,2,3,4), padding = "0", height = 10)
+        self.wind.geometry("800x600")
+        self.Tabla.grid(row=0, column=0, columnspan=2)
+        self.Tabla.heading("#0", text = "Codigo", anchor=CENTER)
+        self.Tabla.heading("#1", text = "Nombre", anchor=CENTER)
+        self.Tabla.heading("#2", text = "Autor", anchor=CENTER)
+        self.Tabla.heading("#3", text = "Stock", anchor=CENTER)
+        Funciones_Admin_Db.Traer(self)
+        self.principal.destroy()
 
     def ventanaPrincipal(self):
         Principal = LabelFrame(self.wind, text = "Ingrese la opcion deseada: ")
         self.principal = Principal
         Principal.grid(row = 0, column = 0, columnspan = 3, pady = 20)
-        Button(Principal, text = "Agregar Libro", height = 2, width = 50, command = lambda : self.cambiar(self.agregarProducto())).grid(row = 1, columnspan = 2, sticky = W + E)
-        Button(Principal, text = "Eliminar Libro", height = 2, command = lambda : self.cambiar(self.eliminarProducto())).grid(row = 2, columnspan = 2, sticky = W + E)
-        Button(Principal, text = "Modificar Stock", height = 2, command = lambda : self.cambiar(self.modificarStock())).grid(row=3, columnspan = 2, sticky = W+E)
-        Button(Principal, text = "Mostrar Libros por consola", height = 2, command = self.Traer).grid(row=4, columnspan=2, sticky = W + E)
+        Button(Principal, text = "Agregar Libro", height = 2, width = 50, command = lambda : self.agregarProducto()).grid(row = 1, columnspan = 2, sticky = W + E)
+        Button(Principal, text = "Eliminar Libro", height = 2, command = lambda : self.eliminarProducto()).grid(row = 2, columnspan = 2, sticky = W + E)
+        Button(Principal, text = "Modificar Stock", height = 2, command = lambda : self.modificarStock()).grid(row=3, columnspan = 2, sticky = W+E)
+        Button(Principal, text = "Mostrar Libros en Stock", command = lambda: self.mostrarStock(), height = 2).grid(row=4, columnspan=2, sticky = W + E)
     
         self.raiz.mainloop()
-
-    def consultar(self, query, parameters = ()):
-        with sql.connect(self.db_nombre) as conn:
-            cursor = conn.cursor()
-            cursor.execute(query, parameters) 
-            result = cursor.execute(query, parameters)
-            conn.commit()
-        return result 
 
     def validarProductos(self):
         return len(self.codigo.get()) and len(self.nombre.get()) != 0 and len(self.autor.get()) != 0 and len(self.stock.get()) 
 
     def validarStock(self):
         return int(self.stock.get()) > 0
-
-    #Consulta a la base de datos
-    def Traer(self):
-        query = 'SELECT * FROM Libros ORDER BY Codigo ASC'
-        db_filas = self.consultar(query)
-        for fila in db_filas:
-            print (fila)
-        print("Libros presentes en el stock.")
-
-    #Agregar Productos (no stock como tal)
-    def agregarProductos(self):
-        if self.validarProductos():
-            query = 'INSERT or IGNORE INTO Libros VALUES(?, ?, ?, ?)'
-            parametros = (self.codigo.get(), self.nombre.get(), self.autor.get(), self.stock.get())
-            self.consultar(query, parametros)
-            print("Los datos han sido guardados.")
-        else:
-            print("Los campos son requeridos.")
-    #Borrar el producto de una lista
-    def borrarProductos(self):
-        borrar = self.codigo.get()
-        query = "DELETE FROM Libros WHERE Codigo = ?"
-        self.consultar(query, (borrar))
-        print("Los datos han sido borrados.")
     
-    def editarStock(self):
-        if self.validarStock():
-            parametros = (self.stock.get(), self.codigo.get())
-            query = "UPDATE Libros SET Stock = ? WHERE Codigo = ?"
-            self.consultar(query, parametros)
-            print("El stock ha sido modificado.")
-        else:
-            print("Se requiere un stock mayor a cero.")
+    def consultar(self, query, parameters = ()):
+        with sql.connect(self.db_nombre) as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, parameters) 
+            result = cursor.execute(query, parameters)
+            conn.commit()
+        return result
 
 if __name__ == "__main__":
     app = Admin()
-    app1 = Admin.ventanaPrincipal(app)
+    app.ventanaPrincipal()
     
