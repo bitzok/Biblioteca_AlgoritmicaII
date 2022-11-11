@@ -1,5 +1,4 @@
 import sqlite3 as sql
-import Clase_Admin as Cod
 
 class Funciones_Admin_Db():
 

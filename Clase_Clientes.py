@@ -31,20 +31,13 @@ class Pedidos(VentanaPrincipal):
         self.wind.rowconfigure(0, weight = 1)
 
 
-    def cambiar(self, frame):
-        try:
-            frame.tkraise()
-        except:
-            print(" ")
-
-
     def ventanaPrincipal(self):
         Principal = LabelFrame(self.wind, text = "Ingrese la opcion deseada: ")
         self.principal = Principal
         Principal.grid(row = 0, column = 0, columnspan = 3, pady = 20)
-        ttk.Button(Principal, text = "Registrar Usuario", command = lambda : self.cambiar(self.nuevoUsuario())).grid(row = 1, columnspan = 2, sticky = W + E)
-        ttk.Button(Principal, text = "Eliminar Usuario", command = lambda : self.cambiar(self.eliminarUsuario())).grid(row = 2, columnspan = 2, sticky = W + E)
-        ttk.Button(Principal, text = "Mostrar Usuarios", command = lambda : self.cambiar(self.mostrarUsuario())).grid(row = 3, columnspan = 2, sticky = W + E)
+        ttk.Button(Principal, text = "Registrar Usuario", command = lambda : self.nuevoUsuario()).grid(row = 1, columnspan = 2, sticky = W + E)
+        ttk.Button(Principal, text = "Eliminar Usuario", command = lambda : self.eliminarUsuario()).grid(row = 2, columnspan = 2, sticky = W + E)
+        ttk.Button(Principal, text = "Mostrar Usuarios", command = lambda : self.mostrarUsuario()).grid(row = 3, columnspan = 2, sticky = W + E)
     
         self.raiz.mainloop()
             
@@ -81,8 +74,6 @@ class Pedidos(VentanaPrincipal):
         #BotónAgregarProducto
         self.principal.destroy()
         ttk.Button(cuadro, text = 'Agregar', command = self.agregarUsuario).grid(row = 5, columnspan = 2, sticky = W + E)
-
-        cuadro.tkraise()
         
 
     def validarUsuario(self):
@@ -100,7 +91,6 @@ class Pedidos(VentanaPrincipal):
         self.principal.destroy()
        #BotónBorrarProducto
         ttk.Button(cuadro2, text = 'Borrar', command = self.borrarUsuario).grid(row = 5, columnspan = 4, sticky = W + E)
-        cuadro2.tkraise()
 
 
     def borrarUsuario(self):
@@ -113,6 +103,7 @@ class Pedidos(VentanaPrincipal):
     def mostrarUsuario(self):
         cuadro3 = LabelFrame(self.wind, text = 'Clientes registrados: ')
         cuadro3.grid(row = 0, column = 0, columnspan = 3, pady = 40)
+        self.wind.geometry("800x600")
         lista = ttk.Treeview(cuadro3, columns = (1, 2, 3), padding = "0", height = 8)
 
         lista.heading("#0", text="Nombres", anchor=CENTER)
