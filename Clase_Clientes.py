@@ -2,7 +2,17 @@ from tkinter import ttk
 from tkinter import *
 from tkinter.messagebox import *
 import sqlite3 as sql
-#from PIL import ImageTk, Image
+
+from abc import ABC, abstractmethod
+
+class I_Clases(ABC):
+    @abstractmethod
+    def ventanaPrincipal(self):
+        pass
+
+    @abstractmethod
+    def consultar(self, consulta, parametros):
+        pass
 
 class VentanaPrincipal():
     def __init__(self):
@@ -80,7 +90,7 @@ class Pedidos(VentanaPrincipal):
 
 
     def eliminarUsuario(self):
-        cuadro2 = LabelFrame(self.wind, text = 'Ingrese el Apellido a eliminar: ')
+        cuadro2 = LabelFrame(self.wind, text = 'Ingrese el DNI del usuario a eliminar: ')
         cuadro2.grid(row = 0, column = 0, columnspan = 3, pady = 40)
         #IngresarCodigo
         Label(cuadro2, text = 'DNI: ').grid(row = 1, column = 0)
@@ -103,14 +113,25 @@ class Pedidos(VentanaPrincipal):
     def mostrarUsuario(self):
         cuadro3 = LabelFrame(self.wind, text = 'Clientes registrados: ')
         cuadro3.grid(row = 0, column = 0, columnspan = 3, pady = 40)
-        lista = ttk.Treeview(cuadro3, columns = (1, 2, 3, 4),padding = "0", show = "headings", height = "8")
+        lista = ttk.Treeview(cuadro3, columns = (1, 2, 3), padding = "0", height = 8)
 
-        lista.heading(1, text="Nombres")
-        lista.heading(2, text="Apellidos")
-        lista.heading(3, text="DNI")
-        lista.heading(4, text="Membresía")
+        lista.heading("#0", text="Nombres", anchor=CENTER)
+        lista.heading("#1", text="Apellidos", anchor=CENTER)
+        lista.heading("#2", text="DNI", anchor=CENTER)
+        lista.heading("#3", text="Membresía", anchor=CENTER)
 
         lista.grid(row = 0, column = 0, columnspan = 3, pady = 40)
+
+        elementos = self.retornoUsuario()
+
+        for i in elementos:
+            lista.insert("", 0, text=i[0], values=(i[1], i[2], i[3]))
+
+
+    def retornoUsuario(self):
+        pedir = "SELECT * FROM DatosClientes"
+        filas = self.consultar(pedir)
+        return filas
 
 
     def agregarUsuario(self):

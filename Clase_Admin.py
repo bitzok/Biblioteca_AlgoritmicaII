@@ -83,7 +83,7 @@ class Admin(VentanaPrincipal, I_Clases):
     def mostrarStock(self):
         cuadro4 = LabelFrame(self.wind, text = "El stock disponible es el siguiente: ")
         #TablaDeProductos
-        self.Tabla = ttk.Treeview(columns = (1,2,3,4), padding = "0", height = 10)
+        self.Tabla = ttk.Treeview(columns = (1,2,3), padding = "0", height = 10)
         self.wind.geometry("800x600")
         self.Tabla.grid(row=0, column=0, columnspan=2)
         self.Tabla.heading("#0", text = "Codigo", anchor=CENTER)
