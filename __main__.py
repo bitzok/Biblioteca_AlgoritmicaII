@@ -31,14 +31,6 @@ def root():
 
     screen_login.mainloop()
 
-def consultar(query, parameters = ()):
-    with sql.connect(db_nombre) as conn:
-        cursor = conn.cursor()
-        cursor.execute(query, parameters) 
-        result = cursor.execute(query, parameters)
-        conn.commit()
-    return result
-
 def login():
     #connection to database
     db=sqlite3.connect('login.db')
@@ -46,18 +38,16 @@ def login():
 
     user = username.get()
     passw = password.get()
-
-    conn  = sql.connect(db_nombre)
-    cursor = conn.cursor()
-    cursor.execute('SELECT lvl FROM users WHERE user = ? AND password = ?', (user, passw))
-    lvl = cursor.fetchall()
-
-
+    
     c.execute('SELECT * FROM users WHERE user = ? AND password = ?', (user, passw))
 
     if c.fetchall():
+        c.execute('SELECT lvl FROM users WHERE user = ? AND password = ?', (user, passw))
+        lvl = c.fetchall()
+
         showinfo(title = "Usuario correcto!", message = "Ingresando al sistema")
         screen_login.destroy()
+
 
         if lvl == [(1,)]:
             app = Cli.Pedidos()
@@ -74,9 +64,5 @@ def login():
 
     c.close()
 
-
-
-
-    
 if __name__ == "__main__":
     root()
