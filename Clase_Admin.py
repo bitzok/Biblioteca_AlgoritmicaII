@@ -10,16 +10,19 @@ class I_Clases(ABC):
     def consultar(self, consulta, parametros):
         pass
 
+    @abstractmethod
+    def VolverMenuPrincipal(self):
+        pass
+
 class Admin(I_Clases):
 
     db_nombre = "StockLibros.db"
 
     def __init__(self):
-        super().__init__()
-        self.codigo = None
-        self.nombre = None
-        self.autor = None
-        self.stock = None
+        self._codigo = None
+        self._nombre = None
+        self._autor = None
+        self._stock = None
 
     def agregarProducto(self):
         #IngresarCodigo
@@ -35,16 +38,18 @@ class Admin(I_Clases):
             Funciones_Admin_Db.agregarProductos(self)
         else:
             print("Ingrese correctamente los campos solicitados.")
+        self.VolverMenuPrincipal()
        
         
     def eliminarProducto(self):
         #IngresarCodigo
-        self.codigo =  int(input("Ingrese el codigo del nuevo libro: "))
+        self.codigo =  int(input("Ingrese el codigo del libro a eliminar: "))
        #CondicionalValores
         if self.codigo > 0:
             Funciones_Admin_Db.borrarProductos(self)
         else:
             print("Ingrese correctamente el campo solicitado.")
+        self.VolverMenuPrincipal()
         
         
     def modificarStock(self):
@@ -60,6 +65,7 @@ class Admin(I_Clases):
     def mostrarStock(self):
         print("Se mostrará el stock disponible: ")
         Funciones_Admin_Db.Traer(self)
+        self.VolverMenuPrincipal()
 
     def ventanaPrincipal(self):
         print("1. Agregar Productos.")
@@ -81,8 +87,8 @@ class Admin(I_Clases):
             print("Ingrese una opcion valida.")
 
     def VolverMenuPrincipal(self):
-        opcion2 = int(input("1 para Sí, 2 para No."))
         print("Desea volver al menu principal?")
+        opcion2 = int(input("1 para Sí, 2 para No."))
         if opcion2 == 1:
             self.ventanaPrincipal()
         else:
