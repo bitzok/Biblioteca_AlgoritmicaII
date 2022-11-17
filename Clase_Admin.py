@@ -105,3 +105,4 @@ class Admin(I_Clases):
 if __name__ == "__main__":
     app = Admin()
     app.ventanaPrincipal()
+    
