@@ -6,27 +6,29 @@ import os
 clear = lambda: os.system('cls')
 
 class Log():
+    
     db_nombre = "login.db"
-
     def Home(self):
         clear()
         print("HOME")
         print("1- LOGIN")
         print("2- SALIR")
         while True:
-            print()
-            userChoice = input("Choose An Option: ")
-            if userChoice in ['1', '2']:
+            user_option = input("Ingrese opcion: ")
+            if user_option in ['1', '2']:
                 break
-        if userChoice == '1':
+        if user_option == '1':
             self.Login()
         else:
+            clear()
+            print("FIN")
             exit
 
     def Login(self):
         #coneccion con la base de datos
         db = sqlite3.connect('login.db')
         c = db.cursor()
+        clear()
         print("     LOGIN BIBLIOTECA")
         user = input("Ingrese usuario: ")
         passw = input("Ingrese contraseña: ")
@@ -38,8 +40,7 @@ class Log():
             c.execute('SELECT lvl FROM users WHERE user = ? AND password = ?', (user, passw))
             lvl = c.fetchall()
 
-            print("Usuario correcto!")
-            print("Ingresando al sistema")
+            print("Ingresando al sistema BIBLIOTECA...\n")
             if lvl == [(1,)]:
                 print("Bienvenido Usuario")
                 app = Pedidos()
@@ -53,7 +54,7 @@ class Log():
                 print(lvl)
 
         else:
-            print("Ups, Usuario y/o contraseña incorrectos")
+            print("Usuario y/o contraseña incorrectos")
 
         c.close()
 
