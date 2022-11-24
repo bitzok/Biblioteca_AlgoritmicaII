@@ -1,5 +1,5 @@
 import sqlite3
-from Clase_Clientes import Pedidos
+
 
 granted = False
 def grant():
@@ -20,8 +20,8 @@ def login(user, passw):
             print("Ingresando al sistema LIBRARY...\n")
             if level == [(1,)]:
                 print("Bienvenido Usuario")
-                app = Pedidos()
-                app.ventanaPrincipal()
+                #app = Pedidos()
+                #app.ventanaPrincipal()
             elif level == [(3,)]:
                 print("Bienvenido Admin")
                 #app2 = Admin()
