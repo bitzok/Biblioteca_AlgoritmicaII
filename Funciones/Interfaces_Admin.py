@@ -1,5 +1,12 @@
 from abc import ABC, abstractmethod
 
+class Atributos():
+    def __init__(self):
+        self._nombres = None
+        self._apellido = None
+        self._dni = None
+        self._membresia = None
+
 class AddProduct(ABC):
     @abstractmethod
     def agregarProducto(self):

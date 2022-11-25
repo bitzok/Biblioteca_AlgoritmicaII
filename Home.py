@@ -1,5 +1,6 @@
 import sqlite3
-
+import Clase_Clientes
+import Clase_Admin
 
 granted = False
 def grant():
@@ -20,12 +21,12 @@ def login(user, passw):
             print("Ingresando al sistema LIBRARY...\n")
             if level == [(1,)]:
                 print("Bienvenido Usuario")
-                #app = Pedidos()
-                #app.ventanaPrincipal()
+                app = Clase_Clientes.Cliente()
+                app.Llamada()
             elif level == [(3,)]:
                 print("Bienvenido Admin")
-                #app2 = Admin()
-                #app2.ventanaPrincipal()
+                app2 = Clase_Admin.Admin()
+                app2.Llamada()
             else:
                 print("Algo salió mal")
     else:
@@ -34,7 +35,6 @@ def login(user, passw):
 
 def register(user, password):
     grant()
-
 
 def access(option):
     global user

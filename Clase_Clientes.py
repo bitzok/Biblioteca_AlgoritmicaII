@@ -1,5 +1,6 @@
 from Funciones_DB import *
 from FuncionesCliente.Funciones_Cliente import *
+from FuncionesCliente.Interfaces_Cliente import *
 from abc import ABC, abstractmethod
 
 class I_Clases(ABC):
@@ -11,15 +12,15 @@ class I_Clases(ABC):
     def consultar(self, consulta, parameters):
         pass
         
-class Cliente(I_Clases):
+class Cliente(I_Clases, Atributos):
 
     db_nombre = "ListaClientes.db"
-
+    """
     def __init__(self):
         self._nombres = None
         self._apellido = None
         self._dni = None
-        self._membresia = None
+        self._membresia = None"""
 
     def Llamada(self):
         VentanaPrincipal.ventanaPrincipal(self)

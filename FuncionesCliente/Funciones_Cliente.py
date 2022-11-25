@@ -1,9 +1,7 @@
-from Clase_Clientes import Cliente
 from Funciones_DB import *
 from FuncionesCliente.Interfaces_Cliente import *
 
-
-class AgregarCliente(Cliente, AddProduct):
+class AgregarCliente(Atributos, AddProduct):
     def __init__(self):
         super().__init__()
 
@@ -19,8 +17,7 @@ class AgregarCliente(Cliente, AddProduct):
             print("Ingrese correctamente los campos solicitados.")
         VolverMenuPrincipal.volverMenu(self)
 
-
-class EliminarCliente(Cliente, RemoveProduct):
+class EliminarCliente(Atributos, RemoveProduct):
     def __init__(self):
         super().__init__()
 
@@ -34,7 +31,7 @@ class EliminarCliente(Cliente, RemoveProduct):
         VolverMenuPrincipal.volverMenu(self)
 
 
-class ModificarCliente(Cliente, ModifyProduct):
+class ModificarCliente(Atributos, ModifyProduct):
     def __init__(self):
         super().__init__()
 
@@ -48,7 +45,7 @@ class ModificarCliente(Cliente, ModifyProduct):
         VolverMenuPrincipal.volverMenu(self)
 
 
-class MostrarCliente(Cliente, ShowStock):
+class MostrarCliente(Atributos, ShowStock):
     def __init__(self):
         super().__init__()
 
@@ -58,7 +55,7 @@ class MostrarCliente(Cliente, ShowStock):
         VolverMenuPrincipal.volverMenu(self)
 
 
-class VolverMenuPrincipal(Cliente, BackToMenu):
+class VolverMenuPrincipal(Atributos, BackToMenu):
     def __init__(self):
         super().__init__()
 
@@ -71,7 +68,7 @@ class VolverMenuPrincipal(Cliente, BackToMenu):
             print("Hasta luego.")
 
 
-class VentanaPrincipal(Cliente, Menu):
+class VentanaPrincipal(Atributos, Menu):
     def __init__(self):
         super().__init__()
 
