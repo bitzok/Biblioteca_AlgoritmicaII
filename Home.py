@@ -24,8 +24,13 @@ def login(user, passw):
                 app.ventanaPrincipal()
             elif level == [(3,)]:
                 print("Bienvenido Admin")
+<<<<<<< HEAD
                 app2 = Admin()
                 app2.ventanaPrincipal()
+=======
+                app2 = Clase_Admin.Admin()
+                app2.Llamada()
+>>>>>>> 49449e562ad4218b432ae9f8a1de08155e4aa1b9
             else:
                 print("Algo salió mal")
     else:
