@@ -24,8 +24,8 @@ def login(user, passw):
                 app.ventanaPrincipal()
             elif level == [(3,)]:
                 print("Bienvenido Admin")
-                #app2 = Admin()
-                #app2.ventanaPrincipal()
+                app2 = Admin()
+                app2.ventanaPrincipal()
             else:
                 print("Algo salió mal")
     else:
@@ -34,7 +34,6 @@ def login(user, passw):
 
 def register(user, password):
     grant()
-
 
 def access(option):
     global user
