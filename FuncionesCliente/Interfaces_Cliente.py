@@ -6,25 +6,25 @@ class Atributos():
         self._apellido = None
         self._dni = None
         self._membresia = None
-
+        
 class AddProduct(ABC):
     @abstractmethod
-    def agregarProducto(self):
+    def agregarCliente(self):
         pass
 
 class RemoveProduct(ABC):
     @abstractmethod
-    def eliminarProducto(self):
+    def eliminarCliente(self):
         pass
 
 class ModifyProduct(ABC):
     @abstractmethod
-    def modificarProducto(self):
+    def modificarCliente(self):
         pass
 
 class ShowStock(ABC):
     @abstractmethod
-    def mostrarStock(self):
+    def mostrarCliente(self):
         pass
 
 class BackToMenu(ABC):

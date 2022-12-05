@@ -1,5 +1,6 @@
 from Funciones_DB import *
 from Funciones.Funciones_Admin import *
+from Funciones.Interfaces_Admin import *
 from abc import ABC, abstractmethod
 
 class I_Clases(ABC):
@@ -12,14 +13,10 @@ class I_Clases(ABC):
         pass
         
 class Admin(I_Clases):
-
-    db_nombre = "StockLibros.db"
-
     def __init__(self):
-        self.codigo = None
-        self.nombre = None
-        self.autor = None
-        self.stock = None
+        super().__init__()
+    
+    db_nombre = "StockLibros.db"
 
     def Llamada(self):
         VentanaPrincipal.ventanaPrincipal(self)

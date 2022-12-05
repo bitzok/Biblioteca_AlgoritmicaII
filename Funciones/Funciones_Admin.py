@@ -1,8 +1,7 @@
-from Clase_Admin import Admin
 from Funciones_DB import *
 from Funciones.Interfaces_Admin import *
 
-class AgregarProducto(Admin, AddProduct):
+class AgregarProducto(Atributos, AddProduct):
     def __init__(self):
         super().__init__()
 
@@ -17,7 +16,7 @@ class AgregarProducto(Admin, AddProduct):
             print("Ingrese correctamente los campos solicitados.")
         VolverMenuPrincipal.volverMenu(self)
 
-class EliminarProducto(Admin, RemoveProduct):
+class EliminarProducto(Atributos, RemoveProduct):
     def __init__(self):
         super().__init__()
 
@@ -29,7 +28,7 @@ class EliminarProducto(Admin, RemoveProduct):
             print("Ingrese correctamente el campo solicitado.")
         VolverMenuPrincipal.volverMenu(self)
 
-class ModificarProducto(Admin, ModifyProduct):
+class ModificarProducto(Atributos, ModifyProduct):
     def __init__(self):
         super().__init__()
 
@@ -42,7 +41,7 @@ class ModificarProducto(Admin, ModifyProduct):
             print("Ingrese correctamente los campos solicitados.")
         VolverMenuPrincipal.volverMenu(self)
 
-class MostrarStock(Admin, ShowStock):
+class MostrarStock(Atributos, ShowStock):
     def __init__(self):
         super().__init__()
 
@@ -51,7 +50,7 @@ class MostrarStock(Admin, ShowStock):
         Funciones_Admin_Db.Traer(self)
         VolverMenuPrincipal.volverMenu(self)
 
-class VolverMenuPrincipal(Admin, BackToMenu):
+class VolverMenuPrincipal(Atributos, BackToMenu):
     def __init__(self):
         super().__init__()
 
@@ -63,7 +62,7 @@ class VolverMenuPrincipal(Admin, BackToMenu):
         else:
             print("Hasta luego.")
         
-class VentanaPrincipal(Admin, Menu):
+class VentanaPrincipal(Atributos, Menu):
     def __init__(self):
         super().__init__()
 

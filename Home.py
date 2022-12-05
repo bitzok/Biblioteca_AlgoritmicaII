@@ -1,5 +1,6 @@
 import sqlite3
-from Clase_Clientes import Pedidos
+import Clase_Clientes
+import Clase_Admin
 
 granted = False
 def grant():
@@ -20,37 +21,59 @@ def login(user, passw):
             print("Ingresando al sistema LIBRARY...\n")
             if level == [(1,)]:
                 print("Bienvenido Usuario")
-                app = Pedidos()
-                app.ventanaPrincipal()
+                app = Clase_Clientes.Cliente()
+                app.Llamada()
             elif level == [(3,)]:
                 print("Bienvenido Admin")
-<<<<<<< HEAD
-                app2 = Admin()
-                app2.ventanaPrincipal()
-=======
                 app2 = Clase_Admin.Admin()
-                app2.Llamada()
->>>>>>> 49449e562ad4218b432ae9f8a1de08155e4aa1b9
+                app2.ventanaPrincipal()
             else:
                 print("Algo salió mal")
     else:
         print("Usuario y/o contraseña incorrectos")
+        access(option==1)
     cursor.close()
 
-def register(user, password):
+def register(user):
+    validar(user)
     grant()
+
+def validar(user):
+    conn = sqlite3.connect('login.db')
+    cursor =conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE user =?',(user,)) 
+    if cursor.fetchall():
+        print("El nombre de usuario ya se encuentra registrado")
+        access(option=2)
+    else:
+        while True:
+            password = input("Ingrese contraseña: ")
+            password1 = input ("Ingrese contraseña nuevamente: ")
+            if (password == password1):
+                print("Usuario registrado con exito")
+                insert(user,password,1)
+                break
+            else:
+                print("Contraseñas no coiciden")
+
+def insert(user,password,lvl):
+    conn = sqlite3.connect('login.db')
+    cursor =conn.cursor()
+    instruction=f"INSERT INTO users VALUES ('{user}','{password}','{lvl}')"
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close() 
 
 def access(option):
     global user
     if (option == 1):
         user = input("Ingrese el nombre de usuario: ")
-        password = input("Enter your password: ")
+        password = input("Ingrese contraseña : ")
         login(user, password)
-    else:
-        print("Ingrese un nombre de usuario y contraseña")
-        user = input("Ingrese nombre de usuario: ")
-        password = input("Ingrese su contraseña: ")
-        register(user, password)
+    elif (option ==2):
+        print("Registrar")
+        user = input("Ingrese nuevo usuario: ")
+        register(user)
 
 def home():
     global option
