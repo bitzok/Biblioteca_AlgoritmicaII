@@ -26,7 +26,7 @@ def login(user, passw):
             elif level == [(3,)]:
                 print("Bienvenido Admin")
                 app2 = Clase_Admin.Admin()
-                app2.ventanaPrincipal()
+                app2.Llamada()
             else:
                 print("Algo salió mal")
     else:
