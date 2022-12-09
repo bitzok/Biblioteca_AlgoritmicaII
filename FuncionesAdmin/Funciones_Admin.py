@@ -1,7 +1,7 @@
 from Funciones_DB import *
 from Funciones.Interfaces_Admin import *
 
-class AgregarProducto(Atributos, AddProduct):
+class AgregarProducto(Atributos):
     def __init__(self):
         super().__init__()
 
@@ -16,7 +16,7 @@ class AgregarProducto(Atributos, AddProduct):
             print("Ingrese correctamente los campos solicitados.")
         VolverMenuPrincipal.volverMenu(self)
 
-class EliminarProducto(Atributos, RemoveProduct):
+class EliminarLibro(Atributos, RemoveProduct):
     def __init__(self):
         super().__init__()
 
@@ -28,7 +28,7 @@ class EliminarProducto(Atributos, RemoveProduct):
             print("Ingrese correctamente el campo solicitado.")
         VolverMenuPrincipal.volverMenu(self)
 
-class ModificarProducto(Atributos, ModifyProduct):
+class ModificarLibro(Atributos, ModifyProduct):
     def __init__(self):
         super().__init__()
 
