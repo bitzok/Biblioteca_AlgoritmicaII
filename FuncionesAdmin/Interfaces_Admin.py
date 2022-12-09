@@ -7,11 +7,6 @@ class Atributos():
         self._dni = None
         self._membresia = None
 
-class AddProduct(ABC):
-    @abstractmethod
-    def agregarProducto(self):
-        pass
-
 class RemoveProduct(ABC):
     @abstractmethod
     def eliminarProducto(self):

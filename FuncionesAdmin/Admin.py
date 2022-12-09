@@ -3,16 +3,7 @@ from Funciones.Funciones_Admin import *
 from Funciones.Interfaces_Admin import *
 from abc import ABC, abstractmethod
 
-class I_Clases(ABC):
-    @abstractmethod
-    def Llamada(self):
-        pass
-
-    @abstractmethod
-    def consultar(self, consulta, parameters):
-        pass
-        
-class Admin(I_Clases):
+class Admin():
     def __init__(self):
         super().__init__()
     
