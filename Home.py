@@ -3,7 +3,6 @@ from Signin import signin
 from os import system
 
 def home():
-    global option
     print(">>>BIENVENIDO<<<")
     while True:
         print("Ingrese una opcion:\n[1]Login\n[2]Register")
