@@ -1,6 +1,5 @@
 from Login import imput
 from Signin import signin
-from os import system
 
 def home():
     print(">>>BIENVENIDO<<<")
@@ -8,7 +7,6 @@ def home():
         print("Ingrese una opcion:\n[1]Login\n[2]Register")
         option = input("Opcion: ")
         option=int(option)
-        system("cls")
         if (option == 1):
            imput()     
         elif (option ==2):

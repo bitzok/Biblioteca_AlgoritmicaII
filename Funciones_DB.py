@@ -51,7 +51,6 @@ class Funciones_Admin_Db():
         self.consultar(query, parametros)
         print("La membresia ha sido modificado correctamente.")
 
-<<<<<<< HEAD
     def BuscarLibro(self):
         query = "SELECT * from Libros WHERE Nombre LIKE '"+str(self.nombres)+"%'" 
         Db_filas = self.consultar(query)
@@ -85,7 +84,6 @@ class Funciones_Admin_Db():
             print(f"Ha reservado el siguiente libro: {Reserva}")
         else:
             print("El libro está disponible para ser pedido.")
-=======
 class Funciones_Login_Db():
     def user_exists(user,passw):
         success = False
@@ -120,4 +118,3 @@ class Funciones_Signin_Db():
         cursor.execute(instruction)
         conn.commit()
         conn.close()
->>>>>>> 7b3b963eee874a84fbd56dfc6c8eab1e8924e101
