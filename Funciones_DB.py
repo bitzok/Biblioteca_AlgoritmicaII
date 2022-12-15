@@ -21,8 +21,8 @@ class Funciones_Admin_Db():
         print("Los datos han sido guardados.")
 
     def agregarClientes(self):
-        query = 'INSERT or IGNORE INTO DatosClientes VALUES(?, ?, ?, ?)'
-        parametros = (self.nombre, self.apellido, self.dni, self.membresia)
+        query = 'INSERT or IGNORE INTO DatosClientes VALUES(?, ?, ?, ?, ?, ?, ?)'
+        parametros = (self.nombre, self.apellido, self.dni, self.membresia, self.tarjeta, self.fechaexp, self.digver)
         self.consultar(query, parametros)
         print("Los datos han sido guardados.")    
 
