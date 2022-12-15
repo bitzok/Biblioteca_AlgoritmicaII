@@ -1,4 +1,4 @@
-from Home import *
+from Home import home
 
 if __name__ == "__main__":
     home()
