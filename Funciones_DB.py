@@ -70,7 +70,6 @@ class Funciones_Admin_Db():
         else:
             print("El libro no se encuentra disponible, considere hacer una reserva.")
             
-
     def ReservarLibro(self):
         query = "SELECT Stock from Libros WHERE Codigo = ?"
         stock = self.consultar(query, self.codigo)
@@ -84,6 +83,21 @@ class Funciones_Admin_Db():
             print(f"Ha reservado el siguiente libro: {Reserva}")
         else:
             print("El libro está disponible para ser pedido.")
+
+    def VerificarCodigo(self):
+        band = False
+        query = "SELECT Codigo From Libros"
+        Codigos = self.consultar(query)
+        for codigo in Codigos:
+            codigo_verificador = ''.join(str(i) for i in codigo)
+            if int(codigo_verificador) == self.codigo:
+                band = True
+            
+        if band:
+            return False
+        else:
+            return True
+             
 class Funciones_Login_Db():
     def user_exists(user,passw):
         success = False

@@ -1,7 +1,7 @@
 from Funciones_DB import *
 from Funciones.Interfaces_Admin import *
 
-class AgregarProducto(Atributos, AddProduct):
+class AgregarProducto(AddProduct):
     def __init__(self):
         super().__init__()
 
@@ -10,7 +10,8 @@ class AgregarProducto(Atributos, AddProduct):
         self.nombre =  str(input("Ingrese el nombre del nuevo libro: "))    
         self.autor = str(input("Ingresar el autor del nuevo libro: "))
         self.stock = int(input("Ingresar el stock del nuevo libro: "))
-        if self.codigo > 0 and len(self.nombre) != 0 and len(self.autor) != 0 and self.stock > 0:
+        Verificacion = Funciones_Admin_Db.VerificarCodigo(self)
+        if (self.codigo > 0 and len(self.nombre) != 0 and len(self.autor) != 0 and self.stock > 0) and (isinstance(self.codigo, int) and (self.nombre, str) and self.autor.isdigit() != True and isinstance(self.stock, int)) and Verificacion == True :
             Funciones_Admin_Db.agregarProductos(self)
         else:
             print("Ingrese correctamente los campos solicitados.")
@@ -22,7 +23,7 @@ class EliminarProducto(Atributos, RemoveProduct):
 
     def eliminarProducto(self):
         self.codigo =  int(input("Ingrese el codigo del libro a eliminar: "))
-        if self.codigo > 0:
+        if self.codigo > 0 and isinstance(self.codigo, int):
             Funciones_Admin_Db.borrarProductos(self)
         else:
             print("Ingrese correctamente el campo solicitado.")
@@ -35,7 +36,7 @@ class ModificarProducto(Atributos, ModifyProduct):
     def modificarProducto(self):
         self.codigo =  int(input("Ingrese el codigo del libro: "))
         self.stock = int(input("Ingresar el nuevo stock del libro: "))
-        if self.codigo > 0 and self.stock > 0:
+        if (self.codigo > 0 and self.stock > 0) and (isinstance(self.codigo, int) and isinstance(self.stock, int)):
             Funciones_Admin_Db.editarStock(self)
         else:
             print("Ingrese correctamente los campos solicitados.")
