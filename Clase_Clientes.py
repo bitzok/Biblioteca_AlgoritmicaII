@@ -14,13 +14,10 @@ class I_Clases(ABC):
         
 class Cliente(I_Clases, Atributos):
 
-    db_nombre = "ListaClientes.db"
-    """
     def __init__(self):
-        self._nombres = None
-        self._apellido = None
-        self._dni = None
-        self._membresia = None"""
+        super().__init__()
+
+    db_nombre = "ListaClientes.db"
 
     def Llamada(self):
         VentanaPrincipal.ventanaPrincipal(self)

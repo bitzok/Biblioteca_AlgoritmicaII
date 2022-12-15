@@ -19,3 +19,5 @@ Librerías usadas:
         Instalar Window: Escribir en terminal "pip Install pysqlite3"
         Instalar Linux: Escribir en terminal: "sudo apt install sqlite3"
     - ABC
+    - werkzeug
+        Instalar Windows: pip install werkzeug
