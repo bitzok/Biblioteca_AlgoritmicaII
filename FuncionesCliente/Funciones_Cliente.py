@@ -15,18 +15,18 @@ class AgregarCliente(Atributos, AddProduct):
         self.tarjeta1 = 'x'
         self.digver = 54
 
-        while len(self.dni) != 8: 
+        while len(self.dni) != 8 or self.dni.isdigit() != True: 
             self.dni = str(input("Ingresar el DNI del nuevo cliente: "))
 
-        while self.membresia<1 or self.membresia>3: 
+        while self.membresia<1 or self.membresia>3 or self.membresia.isdigit() != True: 
             self.membresia = int(input("Ingresar el Nivel de mebresia del nuevo cliente: "))
-        
-        while len(self.tarjeta1) < 13 or len(self.tarjeta1) > 15: 
+
+        while len(self.tarjeta1) < 13 or len(self.tarjeta1) > 15 or self.tarjeta1.isdigit() != True:
             self.tarjeta1 = str(input("Ingresar la tarjeta del  cliente por favor: "))
 
         self.fechaexp = str(input("Ingresar la fecha de expiración de la tarjeta (XX/ZZ): "))
 
-        while self.digver<100 or self.digver>999: 
+        while self.digver<100 or self.digver>999 or self.digver.isdigit() != True: 
             self.digver = int(input("Ingresar los 3 dígitos verificador del cliente: "))
 
         self.tarjeta = generate_password_hash(self.tarjeta1, 'sha256', 10)
