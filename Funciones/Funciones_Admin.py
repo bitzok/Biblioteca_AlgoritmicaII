@@ -1,7 +1,7 @@
 from Funciones_DB import *
 from Funciones.Interfaces_Admin import *
 
-class AgregarProducto(AddProduct):
+class AgregarProducto(Atributos, AddProduct):
     def __init__(self):
         super().__init__()
 
@@ -68,19 +68,20 @@ class VentanaPrincipal(Atributos, Menu):
         super().__init__()
 
     def ventanaPrincipal(self):
-        print("1. Agregar Productos.")
-        print("2. Eliminar Productos.")
-        print("3. Modificar Stock.")
-        print("4. Mostrar Stock.")
-        opcion = int(input("Ingrese la opcion que desee:"))
+            print("1. Agregar Productos.")
+            print("2. Eliminar Productos.")
+            print("3. Modificar Stock.")
+            print("4. Mostrar Stock.")
+            opcion = int(input("Ingrese la opcion que desee:"))
 
-        if opcion == 1:
-            AgregarProducto.agregarProducto(self)
-        elif opcion == 2:
-            EliminarProducto.eliminarProducto(self)
-        elif opcion == 3:
-            ModificarProducto.modificarProducto(self)
-        elif opcion == 4:
-            MostrarStock.mostrarStock(self)
-        else:
-            print("Opcion invalida.")
+            if opcion == 1:
+                AgregarProducto.agregarProducto(self)
+            elif opcion == 2:
+                EliminarProducto.eliminarProducto(self)
+            elif opcion == 3:
+                ModificarProducto.modificarProducto(self)
+            elif opcion == 4:
+                MostrarStock.mostrarStock(self)
+            else:
+                print("Opcion invalida.")
+        

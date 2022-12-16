@@ -60,29 +60,35 @@ class Funciones_Admin_Db():
 
     def PedirLibro(self):
         query = "SELECT Stock from Libros WHERE Codigo = ?"
-        stock = self.consultar(query, self.codigo)
-        for stocks in stock:
-            stock_nuevo = ''.join(str(i) for i in stocks)
-        if int(stock_nuevo) >= 1:
-            query_2 = "UPDATE Libros SET Stock = Stock - 0.5 WHERE Stock > 0 and Codigo = ?"
-            self.consultar(query_2, self.codigo)
-            print("El libro ha sido entregado, recuerde entregarlo a tiempo.")
-        else:
-            print("El libro no se encuentra disponible, considere hacer una reserva.")
+        stock = self.consultar(query, [self.codigo])
+        try:
+            for stocks in stock:
+                stock_nuevo = ''.join(str(i) for i in stocks)
+            if int(stock_nuevo) >= 1:
+                query_2 = "UPDATE Libros SET Stock = Stock - 0.5 WHERE Stock > 0 and Codigo = ?"
+                self.consultar(query_2, self.codigo)
+                print("El libro ha sido entregado, recuerde entregarlo a tiempo.")
+            else:
+                print("El libro no se encuentra disponible, considere hacer una reserva.")
+        except:
+            print("Se ha colocado un codigo no existente.")
             
     def ReservarLibro(self):
         query = "SELECT Stock from Libros WHERE Codigo = ?"
         stock = self.consultar(query, self.codigo)
-        for stocks in stock:
-            stock_nuevo = ''.join(str(i) for i in stocks)
-        if int(stock_nuevo) == 0:
-            query = "SELECT Nombre from Libros WHERE Codigo = ?"
-            nombre = self.consultar(query, self.codigo)
-            for nombres in nombre:
-                Reserva = ''.join(str(i) for i in nombres)
-            print(f"Ha reservado el siguiente libro: {Reserva}")
-        else:
-            print("El libro está disponible para ser pedido.")
+        try:
+            for stocks in stock:
+                stock_nuevo = ''.join(str(i) for i in stocks)
+            if int(stock_nuevo) == 0:
+                query = "SELECT Nombre from Libros WHERE Codigo = ?"
+                nombre = self.consultar(query, self.codigo)
+                for nombres in nombre:
+                    Reserva = ''.join(str(i) for i in nombres)
+                    print(f"Ha reservado el siguiente libro: {Reserva}")
+            else:
+                print("El libro está disponible para ser pedido.")
+        except: 
+            print("El codigo colocado no existe, inténtelo de nuevo.")
 
     def VerificarCodigo(self):
         band = False
@@ -98,6 +104,21 @@ class Funciones_Admin_Db():
         else:
             return True
              
+    def VerificarDNI(self):
+        band = False
+        query = "SELECT DNI From DatosClientes"
+        DNI = self.consultarData(query)
+        for dni in DNI:
+            verificacion = ''.join(str(i) for i in dni)
+            if int(verificacion) == self.identidad:
+                band = True
+    
+        if band:
+            return True
+        else:
+            return False
+
+
 class Funciones_Login_Db():
     def user_exists(user,passw):
         success = False
