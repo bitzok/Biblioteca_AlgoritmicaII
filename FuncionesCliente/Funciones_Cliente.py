@@ -18,7 +18,7 @@ class AgregarCliente(Atributos, AddProduct):
         while len(self.dni) != 8 or self.dni.isdigit() != True: 
             self.dni = str(input("Ingresar el DNI del nuevo cliente: "))
 
-        while self.membresia<1 or self.membresia>3 or self.membresia.isdigit() != True: 
+        while self.membresia<1 or self.membresia>3: 
             self.membresia = int(input("Ingresar el Nivel de mebresia del nuevo cliente: "))
 
         while len(self.tarjeta1) < 13 or len(self.tarjeta1) > 15 or self.tarjeta1.isdigit() != True:
@@ -26,12 +26,17 @@ class AgregarCliente(Atributos, AddProduct):
 
         self.fechaexp = str(input("Ingresar la fecha de expiración de la tarjeta (XX/ZZ): "))
 
-        while self.digver<100 or self.digver>999 or self.digver.isdigit() != True: 
+        while self.digver<100 or self.digver>999: 
             self.digver = int(input("Ingresar los 3 dígitos verificador del cliente: "))
 
         self.tarjeta = generate_password_hash(self.tarjeta1, 'sha256', 10)
 
-        Funciones_Admin_Db.agregarClientes(self)
+        Verificacion = Funciones_Admin_Db.VerificarDNIs(self)
+
+        if Verificacion == True:
+            Funciones_Admin_Db.agregarClientes(self)
+        else:
+            print("Ya existe un usuario registrado con ese DNI")
         
         VolverMenuPrincipal.volverMenu(self)
 

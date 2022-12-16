@@ -30,6 +30,14 @@ class Cliente(I_Clases, Atributos):
             conn.commit()
         return result
 
+    def consultarData(self, query, parameters = ()):
+        with sql.connect(self.db_nombre) as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, parameters) 
+            result = cursor.execute(query, parameters)
+            conn.commit()
+        return result
+
 if __name__ == "__main__":
     app = Cliente()
     app.Llamada()

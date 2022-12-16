@@ -118,6 +118,20 @@ class Funciones_Admin_Db():
         else:
             return False
 
+    def VerificarDNIs(self):
+        band = False
+        query = "SELECT DNI From DatosClientes"
+        DNIs = self.consultarData(query)
+        for dni in DNIs:
+            verificacion = ''.join(str(i) for i in dni)
+            if int(verificacion) == int(self.dni):
+                band = True
+    
+        if band:
+            return False
+        else:
+            return True
+
 
 class Funciones_Login_Db():
     def user_exists(user,passw):

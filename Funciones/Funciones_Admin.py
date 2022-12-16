@@ -4,7 +4,7 @@ from Funciones.Interfaces_Admin import *
 class AgregarProducto(Atributos, AddProduct):
     def __init__(self):
         super().__init__()
-
+        
     def agregarProducto(self):
         self.codigo =  int(input("Ingrese el codigo del nuevo libro: "))
         self.nombre =  str(input("Ingrese el nombre del nuevo libro: "))    
