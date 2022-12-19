@@ -4,13 +4,14 @@ from Funciones.Interfaces_Admin import *
 class AgregarProducto(Atributos, AddProduct):
     def __init__(self):
         super().__init__()
-
+        
     def agregarProducto(self):
         self.codigo =  int(input("Ingrese el codigo del nuevo libro: "))
         self.nombre =  str(input("Ingrese el nombre del nuevo libro: "))    
         self.autor = str(input("Ingresar el autor del nuevo libro: "))
         self.stock = int(input("Ingresar el stock del nuevo libro: "))
-        if self.codigo > 0 and len(self.nombre) != 0 and len(self.autor) != 0 and self.stock > 0:
+        Verificacion = Funciones_Admin_Db.VerificarCodigo(self)
+        if (self.codigo > 0 and len(self.nombre) != 0 and len(self.autor) != 0 and self.stock > 0) and (isinstance(self.codigo, int) and (self.nombre, str) and self.autor.isdigit() != True and isinstance(self.stock, int)) and Verificacion == True :
             Funciones_Admin_Db.agregarProductos(self)
         else:
             print("Ingrese correctamente los campos solicitados.")
@@ -22,7 +23,7 @@ class EliminarProducto(Atributos, RemoveProduct):
 
     def eliminarProducto(self):
         self.codigo =  int(input("Ingrese el codigo del libro a eliminar: "))
-        if self.codigo > 0:
+        if self.codigo > 0 and isinstance(self.codigo, int):
             Funciones_Admin_Db.borrarProductos(self)
         else:
             print("Ingrese correctamente el campo solicitado.")
@@ -35,7 +36,7 @@ class ModificarProducto(Atributos, ModifyProduct):
     def modificarProducto(self):
         self.codigo =  int(input("Ingrese el codigo del libro: "))
         self.stock = int(input("Ingresar el nuevo stock del libro: "))
-        if self.codigo > 0 and self.stock > 0:
+        if (self.codigo > 0 and self.stock > 0) and (isinstance(self.codigo, int) and isinstance(self.stock, int)):
             Funciones_Admin_Db.editarStock(self)
         else:
             print("Ingrese correctamente los campos solicitados.")
@@ -67,19 +68,20 @@ class VentanaPrincipal(Atributos, Menu):
         super().__init__()
 
     def ventanaPrincipal(self):
-        print("1. Agregar Productos.")
-        print("2. Eliminar Productos.")
-        print("3. Modificar Stock.")
-        print("4. Mostrar Stock.")
-        opcion = int(input("Ingrese la opcion que desee:"))
+            print("1. Agregar Productos.")
+            print("2. Eliminar Productos.")
+            print("3. Modificar Stock.")
+            print("4. Mostrar Stock.")
+            opcion = int(input("Ingrese la opcion que desee:"))
 
-        if opcion == 1:
-            AgregarProducto.agregarProducto(self)
-        elif opcion == 2:
-            EliminarProducto.eliminarProducto(self)
-        elif opcion == 3:
-            ModificarProducto.modificarProducto(self)
-        elif opcion == 4:
-            MostrarStock.mostrarStock(self)
-        else:
-            print("Opcion invalida.")
+            if opcion == 1:
+                AgregarProducto.agregarProducto(self)
+            elif opcion == 2:
+                EliminarProducto.eliminarProducto(self)
+            elif opcion == 3:
+                ModificarProducto.modificarProducto(self)
+            elif opcion == 4:
+                MostrarStock.mostrarStock(self)
+            else:
+                print("Opcion invalida.")
+        

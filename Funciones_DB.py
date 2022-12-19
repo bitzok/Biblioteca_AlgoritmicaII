@@ -21,8 +21,8 @@ class Funciones_Admin_Db():
         print("Los datos han sido guardados.")
 
     def agregarClientes(self):
-        query = 'INSERT or IGNORE INTO DatosClientes VALUES(?, ?, ?, ?)'
-        parametros = (self.nombre, self.apellido, self.dni, self.membresia)
+        query = 'INSERT or IGNORE INTO DatosClientes VALUES(?, ?, ?, ?, ?, ?, ?)'
+        parametros = (self.nombre, self.apellido, self.dni, self.membresia, self.tarjeta, self.fechaexp, self.digver)
         self.consultar(query, parametros)
         print("Los datos han sido guardados.")    
 
@@ -60,30 +60,78 @@ class Funciones_Admin_Db():
 
     def PedirLibro(self):
         query = "SELECT Stock from Libros WHERE Codigo = ?"
-        stock = self.consultar(query, self.codigo)
-        for stocks in stock:
-            stock_nuevo = ''.join(str(i) for i in stocks)
-        if int(stock_nuevo) >= 1:
-            query_2 = "UPDATE Libros SET Stock = Stock - 0.5 WHERE Stock > 0 and Codigo = ?"
-            self.consultar(query_2, self.codigo)
-            print("El libro ha sido entregado, recuerde entregarlo a tiempo.")
-        else:
-            print("El libro no se encuentra disponible, considere hacer una reserva.")
+        stock = self.consultar(query, [self.codigo])
+        try:
+            for stocks in stock:
+                stock_nuevo = ''.join(str(i) for i in stocks)
+            if int(stock_nuevo) >= 1:
+                query_2 = "UPDATE Libros SET Stock = Stock - 0.5 WHERE Stock > 0 and Codigo = ?"
+                self.consultar(query_2, self.codigo)
+                print("El libro ha sido entregado, recuerde entregarlo a tiempo.")
+            else:
+                print("El libro no se encuentra disponible, considere hacer una reserva.")
+        except:
+            print("Se ha colocado un codigo no existente.")
             
-
     def ReservarLibro(self):
         query = "SELECT Stock from Libros WHERE Codigo = ?"
         stock = self.consultar(query, self.codigo)
-        for stocks in stock:
-            stock_nuevo = ''.join(str(i) for i in stocks)
-        if int(stock_nuevo) == 0:
-            query = "SELECT Nombre from Libros WHERE Codigo = ?"
-            nombre = self.consultar(query, self.codigo)
-            for nombres in nombre:
-                Reserva = ''.join(str(i) for i in nombres)
-            print(f"Ha reservado el siguiente libro: {Reserva}")
+        try:
+            for stocks in stock:
+                stock_nuevo = ''.join(str(i) for i in stocks)
+            if int(stock_nuevo) == 0:
+                query = "SELECT Nombre from Libros WHERE Codigo = ?"
+                nombre = self.consultar(query, self.codigo)
+                for nombres in nombre:
+                    Reserva = ''.join(str(i) for i in nombres)
+                    print(f"Ha reservado el siguiente libro: {Reserva}")
+            else:
+                print("El libro está disponible para ser pedido.")
+        except: 
+            print("El codigo colocado no existe, inténtelo de nuevo.")
+
+    def VerificarCodigo(self):
+        band = False
+        query = "SELECT Codigo From Libros"
+        Codigos = self.consultar(query)
+        for codigo in Codigos:
+            codigo_verificador = ''.join(str(i) for i in codigo)
+            if int(codigo_verificador) == self.codigo:
+                band = True
+            
+        if band:
+            return False
         else:
-            print("El libro está disponible para ser pedido.")
+            return True
+             
+    def VerificarDNI(self):
+        band = False
+        query = "SELECT DNI From DatosClientes"
+        DNI = self.consultarData(query)
+        for dni in DNI:
+            verificacion = ''.join(str(i) for i in dni)
+            if int(verificacion) == self.identidad:
+                band = True
+    
+        if band:
+            return True
+        else:
+            return False
+
+    def VerificarDNIs(self):
+        band = False
+        query = "SELECT DNI From DatosClientes"
+        DNIs = self.consultarData(query)
+        for dni in DNIs:
+            verificacion = ''.join(str(i) for i in dni)
+            if int(verificacion) == int(self.dni):
+                band = True
+    
+        if band:
+            return False
+        else:
+            return True
+
 
 class Funciones_Login_Db():
     def user_exists(user):

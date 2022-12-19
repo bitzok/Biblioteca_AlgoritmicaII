@@ -1,20 +1,43 @@
 from Funciones_DB import *
 from FuncionesCliente.Interfaces_Cliente import *
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 class AgregarCliente(Atributos, AddProduct):
     def __init__(self):
         super().__init__()
 
     def agregarCliente(self):
         self.nombre =  str(input("Ingrese el Nombre del nuevo cliente: "))
-        self.apellido =  str(input("Ingrese el Apellido del nuevo cliente: "))    
-        self.dni = str(input("Ingresar el DNI del nuevo cliente: "))
-        self.membresia = int(input("Ingresar el Nivel de mebresia del nuevo cliente: "))
+        self.apellido =  str(input("Ingrese el Apellido del nuevo cliente: "))
+        self.dni = 'x'
+        self.membresia = 0
+        self.tarjeta1 = 'x'
+        self.digver = 54
 
-        if len(self.nombre) != 0 and len(self.apellido) != 0 and len(self.dni) != 0 and self.membresia > 0:
+        while len(self.dni) != 8 or self.dni.isdigit() != True: 
+            self.dni = str(input("Ingresar el DNI del nuevo cliente: "))
+
+        while self.membresia<1 or self.membresia>3: 
+            self.membresia = int(input("Ingresar el Nivel de mebresia del nuevo cliente: "))
+
+        while len(self.tarjeta1) < 13 or len(self.tarjeta1) > 15 or self.tarjeta1.isdigit() != True:
+            self.tarjeta1 = str(input("Ingresar la tarjeta del  cliente por favor: "))
+
+        self.fechaexp = str(input("Ingresar la fecha de expiración de la tarjeta (XX/ZZ): "))
+
+        while self.digver<100 or self.digver>999: 
+            self.digver = int(input("Ingresar los 3 dígitos verificador del cliente: "))
+
+        self.tarjeta = generate_password_hash(self.tarjeta1, 'sha256', 10)
+
+        Verificacion = Funciones_Admin_Db.VerificarDNIs(self)
+
+        if Verificacion == True:
             Funciones_Admin_Db.agregarClientes(self)
         else:
-            print("Ingrese correctamente los campos solicitados.")
+            print("Ya existe un usuario registrado con ese DNI")
+        
         VolverMenuPrincipal.volverMenu(self)
 
 class EliminarCliente(Atributos, RemoveProduct):
@@ -60,8 +83,8 @@ class VolverMenuPrincipal(Atributos, BackToMenu):
         super().__init__()
 
     def volverMenu(self):
-        print("Desea volver al menu principal?")
-        opcion2 = int(input("1. Sí, 2. No."))
+        print("Desea volver a las opciones anteriores?")
+        opcion2 = int(input("1. Sí, 2. No.\n"))
         if opcion2 == 1:
             VentanaPrincipal.ventanaPrincipal(self)
         else:
@@ -77,7 +100,7 @@ class VentanaPrincipal(Atributos, Menu):
         print("2. Eliminar Cliente.")
         print("3. Modificar Nivel del Cliente.")
         print("4. Mostrar Clientes totales.")
-        opcion = int(input("Ingrese la opcion que desee:"))
+        opcion = int(input("Ingrese la opcion que desee --> "))
 
         if opcion == 1: 
             AgregarCliente.agregarCliente(self)

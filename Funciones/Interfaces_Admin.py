@@ -2,10 +2,10 @@ from abc import ABC, abstractmethod
 
 class Atributos():
     def __init__(self):
-        self._nombres = None
-        self._apellido = None
-        self._dni = None
-        self._membresia = None
+        self._codigo = None
+        self._nombre = None
+        self._autor = None
+        self._stock = None
 
 class AddProduct(ABC):
     @abstractmethod

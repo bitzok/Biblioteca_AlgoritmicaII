@@ -14,18 +14,23 @@ class I_Clases(ABC):
         
 class Cliente(I_Clases, Atributos):
 
-    db_nombre = "ListaClientes.db"
-    """
     def __init__(self):
-        self._nombres = None
-        self._apellido = None
-        self._dni = None
-        self._membresia = None"""
+        super().__init__()
+
+    db_nombre = "ListaClientes.db"
 
     def Llamada(self):
         VentanaPrincipal.ventanaPrincipal(self)
 
     def consultar(self, query, parameters = ()):
+        with sql.connect(self.db_nombre) as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, parameters) 
+            result = cursor.execute(query, parameters)
+            conn.commit()
+        return result
+
+    def consultarData(self, query, parameters = ()):
         with sql.connect(self.db_nombre) as conn:
             cursor = conn.cursor()
             cursor.execute(query, parameters) 
