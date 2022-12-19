@@ -84,22 +84,38 @@ class Funciones_Admin_Db():
             print(f"Ha reservado el siguiente libro: {Reserva}")
         else:
             print("El libro está disponible para ser pedido.")
+
 class Funciones_Login_Db():
-    def user_exists(user,passw):
-        success = False
+    def user_exists(user):
         conn = sql.connect("login.db")
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM users WHERE user = ? AND password = ?', (user, passw))
+        cursor.execute('SELECT * FROM users WHERE user = ?', (user,))
         if cursor.fetchall():
-            cursor.execute('SELECT lvl FROM users WHERE user = ? AND password = ?', (user, passw))
-            level = cursor.fetchall()
-            success=True
-            if(success):
-                return level
+            cursor.close()
+            return True
         else:
-            print("Usuario no se encuentra registrado")
             return False
-        cursor.close()
+    def password_exists(user,passw):
+        conn = sql.connect("login.db")
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users WHERE user = ? AND password = ?', (user,passw))
+        if cursor.fetchall():
+            cursor.close()
+            return True
+        else:
+            return False
+    
+    def level_exists(user,passw):
+        conn = sql.connect("login.db")
+        cursor = conn.cursor()
+        cursor.execute('SELECT lvl FROM users WHERE user = ? AND password = ?', (user, passw))
+        level = cursor.fetchall()
+        if level:
+           pass
+        else:
+            level = None
+        return level
+                  
 
 class Funciones_Signin_Db():
     def search(user):

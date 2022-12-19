@@ -4,12 +4,18 @@ from Signin import signin
 def home():
     print(">>>BIENVENIDO<<<")
     while True:
+        option = None
         print("Ingrese una opcion:\n[1]Login\n[2]Register")
-        option = input("Opcion: ")
-        option=int(option)
-        if (option == 1):
-           imput()     
-        elif (option ==2):
-            signin()
+        option = input("->Opcion: ")
+        if option is not None:
+            if int(option) == 1:
+                imput()     
+            elif int (option) ==2:
+                signin()
+            else:
+                print(f"Opcion {option} invalida")
         else:
-            print(">>>Opcion invalida<<<")
+            print ("ERROR, debe ingresar una opcion")
+            
+
+        

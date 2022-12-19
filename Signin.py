@@ -1,37 +1,27 @@
-from Login import validate_password,validate_user
-from Funciones_DB import Funciones_Signin_Db
-
+from Home_utilities import*
+from CreatePassword import create_password
+from CreateUser import create_user
 def signin():
-    print(">>>SIGNIN<<")
-    attempts = 0
+    print("\t>>>SIGNIN<<")
     while True:
         user = input("Ingrese el nombre de usuario: ")
-        if validate_user(user):
-            buscar = Funciones_Signin_Db.search(user)
-            if buscar: 
-                while True:
-                    password = input("Ingrese contraseña: ")
-                    attempts += 1
-                    if validate_password(password):
-                        print("Verificando...")
-                        password1 = input("Ingrese contraseña nuevamente: ")
-                        if (password == password1):
-                            insertar=Funciones_Signin_Db.insert(user, password,1)
-                            print("Nuevo usuario registrado!... ")
-                            insertar
-                            break
-                        else:
-                            print("Contraseñas no coinciden ")
-                    elif attempts >= 3:
-                        password = None
-                        print("ERROR: DEMASIADOS INTENTOS")
-                        break
+        if user_already_exists(user)==False:
+            u =create_user(user)
+            if u.validate_user():
+                password = input('Insert Password: ')
+                password2 = input('Repeat Password: ')
+                passw = create_password(password)
+                if passw.validate():
+                    if passw.compare(password2) is True:
+                        print('Usuario Registrado con exito')
+                        new_user(user,password,1)
+                    else:
+                        print ("ERROR,Contraseñas no coiciden")
+                    break
+                else:
+                    print(passw.validate())
             else:
-                print("El usuario ya se encuentra registrado")
+                print(u.validate_user())   
         else:
-            attempts+=1
-            print("Intente nuevamente")
-            if attempts >= 3:
-                print("ERROR: DEMASIADOS INTENTOS")
-                break
-    
+            print("El usuario ya se encuentra registrado")
+        break
