@@ -45,3 +45,8 @@ Nuevas funcionalidades:
             Se reserva libros que SOLO no estén disponibles en el stock, es decir, su valor sea igual a 0.
 
         
+TO DO:
+Pedir Libro con Verificación de Membresía: Que los libros se puedan pedir cierta cantidad de tiempo verificando la membresía que se encuentra en la base de datos de Clientes (Niveles 1 a 3, de menor a mayor).
+Nivel 1: 7 días
+Nivel 2: 14 Días
+Nivel 3: 30 días o un mes
