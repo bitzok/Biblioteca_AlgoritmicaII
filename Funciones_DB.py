@@ -13,7 +13,7 @@ class Funciones_Admin_Db():
         db_filas = self.consultar(query)
         for fila in db_filas:
             print(fila)
-    
+
     def agregarProductos(self):
         query = 'INSERT or IGNORE INTO Libros VALUES(?, ?, ?, ?)'
         parametros = (self.codigo, self.nombre, self.autor, self.stock)
@@ -58,20 +58,20 @@ class Funciones_Admin_Db():
         for fila in Db_filas:
             print(fila)
 
-    def PedirLibro(self):
-        query = "SELECT Stock from Libros WHERE Codigo = ?"
-        stock = self.consultar(query, [self.codigo])
-        try:
-            for stocks in stock:
-                stock_nuevo = ''.join(str(i) for i in stocks)
-            if int(stock_nuevo) >= 1:
-                query_2 = "UPDATE Libros SET Stock = Stock - 0.5 WHERE Stock > 0 and Codigo = ?"
-                self.consultar(query_2, self.codigo)
-                print("El libro ha sido entregado, recuerde entregarlo a tiempo.")
-            else:
-                print("El libro no se encuentra disponible, considere hacer una reserva.")
-        except:
-            print("Se ha colocado un codigo no existente.")
+    #def PedirLibro(self):
+        #query = "SELECT Stock from Libros WHERE Codigo = ?"
+        #stock = self.consultar(query, [self.codigo])
+        #try:
+            #for stocks in stock:
+                #stock_nuevo = ''.join(str(i) for i in stocks)
+            #if int(stock_nuevo) >= 1:
+                #query_2 = "UPDATE Libros SET Stock = Stock - 0.5 WHERE Stock > 0 and Codigo = ?"
+                #self.consultar(query_2, self.codigo)
+                #print("El libro ha sido entregado, recuerde entregarlo a tiempo.")
+           # else:
+               # print("El libro no se encuentra disponible, considere hacer una reserva.")
+       # except:
+           # print("Se ha colocado un codigo no existente.")
             
     def ReservarLibro(self):
         query = "SELECT Stock from Libros WHERE Codigo = ?"
@@ -131,6 +131,16 @@ class Funciones_Admin_Db():
             return False
         else:
             return True
+
+    def Membresia(self):
+        query = "SELECT * from DatosClientes WHERE DNI LIKE '"+str(self.dni)+"%'"
+        db_filas = self.consultarData(query)
+        nro = 3
+        membresia = ''
+        for fila in db_filas:
+            if (fila[2] == self.dni):
+                    membresia = fila[nro]
+        return int(membresia)
 
 
 class Funciones_Login_Db():

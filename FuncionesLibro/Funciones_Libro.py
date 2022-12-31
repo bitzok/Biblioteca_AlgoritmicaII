@@ -1,3 +1,4 @@
+from FuncionesCliente.Funciones_Cliente import Funciones_Cliente_Db
 from Funciones_DB import *
 from Funciones.Interfaces_Admin import *
 
@@ -11,14 +12,20 @@ class Buscar(Atributos):
         Funciones_Admin_Db.BuscarLibro(self)
         VolverMenuPrincipal.volverMenu(self)
 
+    def buscarMembresia(self):
+        self.dni = input("Ingrese el DNI de cliente: ")
+        membresia = Funciones_Admin_Db.Membresia(self)
+        return membresia
+
 class Pedir(Atributos):
     def __init__(self):
         super().__init__()
     
     def pedirLibro(self):
         self.codigo = input("Ingrese el codigo del libro a pedir: ")
-        Funciones_Admin_Db.PedirLibro(self)
+        Funciones_Cliente_Db.PedirLibro(self)
         VolverMenuPrincipal.volverMenu(self)
+
 class Reserva(Atributos):
     def __init__(self):
         super().__init__()
@@ -37,6 +44,7 @@ class VentanaPrincipal(Atributos):
             VerificarCliente.verificarDNI(self)
        
         if self.VerificarIdentidad:
+            print()
             self.cond = 1
             print("1. Consultar disponibilidad del libro.")
             print("2. Pedir libro.")

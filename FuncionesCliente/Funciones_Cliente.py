@@ -1,6 +1,5 @@
 from Funciones_DB import *
 from FuncionesCliente.Interfaces_Cliente import *
-
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class AgregarCliente(Atributos, AddProduct):
@@ -99,7 +98,6 @@ class VentanaPrincipal(Atributos, Menu):
         print("1. Agregar Cliente.")
         print("2. Eliminar Cliente.")
         print("3. Modificar Nivel del Cliente.")
-        print("4. Mostrar Clientes totales.")
         opcion = int(input("Ingrese la opcion que desee --> "))
 
         if opcion == 1: 
@@ -108,7 +106,29 @@ class VentanaPrincipal(Atributos, Menu):
             EliminarCliente.eliminarCliente(self)
         elif opcion == 3:
             ModificarCliente.modificarNivel(self)
-        elif opcion == 4: 
-            MostrarCliente.mostrarCliente(self)
         else:
             print("Ingrese una opcion valida.")
+
+class Funciones_Cliente_Db():
+    def PedirLibro(self):
+        query = "SELECT Stock from Libros WHERE Codigo = ?"
+        stock = self.consultar(query, [self.codigo])
+        from FuncionesLibro.Funciones_Libro import Buscar
+        membresia = Buscar.buscarMembresia(self)
+        try:
+            for stocks in stock:
+                stock_nuevo = ''.join(str(i) for i in stocks)
+            if int(stock_nuevo) >= 1:
+                query_2 = "UPDATE Libros SET Stock = Stock - 0.5 WHERE Stock > 0 and Codigo = ?"
+                self.consultar(query_2, self.codigo)
+                print("El libro ha sido entregado, recuerde entregarlo a tiempo.")
+                if (membresia == 1):
+                    print("Tiene un plazo de 7 dias para devolverlo a la biblioteca.")
+                elif (membresia == 2):
+                    print("Tiene un plazo de 14 dias para devolverlo a la biblioteca.")
+                else:
+                    print("Tiene un plazo de 30 dias para devolverlo a la biblioteca.")
+            else:
+                print("El libro no se encuentra disponible, considere hacer una reserva.")
+        except:
+            print("Se ha colocado un codigo no existente.")
