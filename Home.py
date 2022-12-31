@@ -10,7 +10,7 @@ def home():
         if option is not None:
             if int(option) == 1:
                 imput()     
-            elif int (option) ==2:
+            elif int (option) == 2:
                 signin()
             else:
                 print(f"Opcion {option} invalida")

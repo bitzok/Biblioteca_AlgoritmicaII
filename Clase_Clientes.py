@@ -41,4 +41,3 @@ class Cliente(I_Clases, Atributos):
 if __name__ == "__main__":
     app = Cliente()
     app.Llamada()
-    
